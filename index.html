@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1SecAds - Account Portal</title>
+<style>
+/* Base Styles */
+:root {
+  --primary: #4361ee;
+  --secondary: #3a0ca3;
+  --accent: #4cc9f0;
+  --success: #4ade80;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --light: #f8fafc;
+  --dark: #1e293b;
+  --gray: #64748b;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(-45deg, #4361ee, #3a0ca3, #7209b7, #4cc9f0);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--light);
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Header Styles */
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  animation: fadeInDown 1s ease;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--accent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(76, 201, 240, 0.4);
+  animation: pulse 2s infinite;
+}
+
+.logo-text {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(to right, #fff, #e0f2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 5px;
+}
+
+/* Forms Container */
+.forms-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  animation: fadeInUp 1s ease 0.3s both;
+}
+
+.form-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, var(--accent), var(--primary));
+}
+
+.form-title {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  text-align: center;
+  position: relative;
+}
+
+.form-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* Form Elements */
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.input-field {
+  width: 100%;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.input-field:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+}
+
+.input-field::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Button Styles */
+.btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(67, 97, 238, 0.6);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+}
+
+/* Message Styles */
+.message {
+  margin-top: 20px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: var(--transition);
+}
+
+.message.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.message.success {
+  background: rgba(76, 222, 128, 0.2);
+  border: 1px solid rgba(76, 222, 128, 0.3);
+  color: #4ade80;
+}
+
+.message.error {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(76, 201, 240, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(76, 201, 240, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 201, 240, 0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .forms-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-card {
+    padding: 25px 20px;
+  }
+  
+  .logo-text {
+    font-size: 2rem;
+  }
+}
+
+/* Loading Animation */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.loading.show {
+  opacity: 1;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Footer */
+.footer {
+  margin-top: 40px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  animation: fadeIn 1s ease 0.6s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Particles Background */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 15s infinite linear;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+<body>
+<!-- Animated Background Particles -->
+<div class="particles" id="particles"></div>
+
+<div class="container">
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L13.09 8.26L20 9.27L15 14.14L16.18 21.02L12 17.77L7.82 21.02L9 14.14L4 9.27L10.91 8.26L12 2Z" fill="white"/>
+        </svg>
+      </div>
+      <h1 class="logo-text">1SecAds</h1>
+    </div>
+    <p class="tagline">Instant Advertising Solutions</p>
+  </header>
+
+  <div class="forms-container">
+    <!-- Registration Form -->
+    <div class="form-card">
+      <h2 class="form-title">Create Account</h2>
+      <div class="input-group">
+        <label for="regUsername">Username</label>
+        <input type="text" id="regUsername" class="input-field" placeholder="Enter your username">
+      </div>
+      <div class="input-group">
+        <label for="regEmail">Email</label>
+        <input type="email" id="regEmail" class="input-field" placeholder="Enter your email">
+      </div>
+      <div class="input-group">
+        <label for="regPassword">Password</label>
+        <input type="password" id="regPassword" class="input-field" placeholder="Create a password">
+      </div>
+      <button class="btn btn-primary" onclick="register()">
+        <span class="btn-icon">+</span>
+        <span>Create Account</span>
+        <div class="loading" id="regLoading"></div>
+      </button>
+      <div class="message" id="regMsg"></div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form-card">
+      <h2 class="form-title">Sign In</h2>
+      <div class="input-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" class="input-field" placeholder="Enter your email">
+      </div>
+      <div class="input-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" class="input-field" placeholder="Enter your password">
+      </div>
+      <button class="btn btn-primary" onclick="login()">
+        <span class="btn-icon">→</span>
+        <span>Sign In</span>
+        <div class="loading" id="loginLoading"></div>
+      </button>
+      <div class="message" id="loginMsg"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2023 1SecAds. All rights reserved.</p>
+  </footer>
+</div>
+
+<script>
+const API_URL = "https://1secapi.page.gd";
+
+// Create animated background particles
+function createParticles() {
+  const particlesContainer = document.getElementById('particles');
+  const particleCount = 30;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    
+    const size = Math.random() * 20 + 5;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+    
+    particle.style.animationDelay = `${Math.random() * 15}s`;
+    particle.style.animationDuration = `${Math.random() * 10 + 15}s`;
+    
+    particlesContainer.appendChild(particle);
+  }
+}
+
+// Show message with animation
+function showMessage(elementId, message, type) {
+  const messageElement = document.getElementById(elementId);
+  messageElement.textContent = message;
+  messageElement.className = `message ${type} show`;
+  
+  // Auto hide after 5 seconds
+  setTimeout(() => {
+    messageElement.classList.remove('show');
+  }, 5000);
+}
+
+// Show loading animation
+function showLoading(elementId, show) {
+  const loadingElement = document.getElementById(elementId);
+  if (show) {
+    loadingElement.classList.add('show');
+  } else {
+    loadingElement.classList.remove('show');
+  }
+}
+
+// Registration function
+async function register() {
+  const username = document.getElementById("regUsername").value;
+  const email = document.getElementById("regEmail").value;
+  const password = document.getElementById("regPassword").value;
+
+  // Basic validation
+  if (!username || !email || !password) {
+    showMessage("regMsg", "Please fill in all fields", "error");
+    return;
+  }
+
+  showLoading("regLoading", true);
+
+  try {
+    const res = await fetch(`${API_URL}/register.php`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({username, email, password})
+    });
+    
+    const data = await res.json();
+    showMessage("regMsg", data.message, data.status === "success" ? "success" : "error");
+    
+    if (data.status === "success") {
+      // Clear form on success
+      document.getElementById("regUsername").value = "";
+      document.getElementById("regEmail").value = "";
+      document.getElementById("regPassword").value = "";
+    }
+  } catch (error) {
+    showMessage("regMsg", "Registration failed. Please try again.", "error");
+  } finally {
+    showLoading("regLoading", false);
+  }
+}
+
+// Login function
+async function login() {
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
+
+  // Basic validation
+  if (!email || !password) {
+    showMessage("loginMsg", "Please fill in all fields", "error");
+    return;
+  }
+
+  showLoading("loginLoading", true);
+
+  try {
+    const res = await fetch(`${API_URL}/login.php`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email, password})
+    });
+    
+    const data = await res.json();
+    showMessage("loginMsg", data.message, data.status === "success" ? "success" : "error");
+    
+    if (data.status === "success") {
+      console.log("User Data:", data.user);
+      // Clear form on success
+      document.getElementById("loginEmail").value = "";
+      document.getElementById("loginPassword").value = "";
+    }
+  } catch (error) {
+    showMessage("loginMsg", "Login failed. Please try again.", "error");
+  } finally {
+    showLoading("loginLoading", false);
+  }
+}
+
+// Initialize particles when page loads
+window.addEventListener('DOMContentLoaded', createParticles);
+</script>
+</body>
+</html>
